@@ -18,4 +18,3 @@ while True:
             s.append(float(func(s.pop()) if func else arg))
         except:
             s.clear()
-
