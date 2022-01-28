@@ -1,19 +1,22 @@
-ops = ()
 s = []
 o = {
-    "+": lambda x: (s.pop() if len(s) > 0 else 0) + x,
-    "-": lambda x: (s.pop() if len(s) > 0 else 0) - x,
-    "*": lambda x: (s.pop() if len(s) > 0 else 0) * x,
-    "/": lambda x: (s.pop() if len(s) > 0 else 0) / x if x > 0 else 0,
+    "+": lambda x: x + s.pop(),
+    "-": lambda x: x - s.pop(),
+    "*": lambda x: x * s.pop(),
+    "/": lambda x: x / s.pop(),
 }
-f = ":"
 while True:
-    op = input(f"{f} ").strip()
+    op = input(f": ").strip()
     if op == "":
         break
-    for ch in op.split():
+    for arg in op.split():
         if op == "?":
-            print(f, *s)
+            print(f":", *s)
             continue
-        func = o[ch] if ch in o.keys() else None
-        s.append(func(s.pop() if len(s) > 0 else 0) if func else float(ch))
+        func = o[arg] if arg in o.keys() else None
+        try:
+            s.append(float(func(s.pop()) if func else arg))
+        except:
+            s.clear()
+            pass
+
